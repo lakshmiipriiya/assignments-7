@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= resume.fullName %> Resume</title>
+    <link rel="stylesheet" href="/css/resume.css">
+</head>
+<body>
+    <div class="resume">
+
+        <header>
+            <h1><%= resume.fullName %></h1>
+
+            <div class="contact">
+                <% if (resume.email) { %>
+                    <p><%= resume.email %></p>
+                <% } %>
+                <% if (resume.phone) { %>
+                    <p><%= resume.phone %></p>
+                <% } %>
+                <% if (resume.location) { %>
+                    <p><%= resume.location %></p>
+                <% } %>
+            </div>
+
+            <div class="links">
+                <% if (resume.linkedinUrl) { %>
+                    <a href="<%= resume.linkedinUrl %>"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        LinkedIn: <%= resume.linkedinLabel || resume.linkedinUrl %>
+                    </a>
+                <% } %>
+
+                <% if (resume.linkedinUrl && resume.githubUrl) { %>
+                    |
+                <% } %>
+
+                <% if (resume.githubUrl) { %>
+                    <a href="<%= resume.githubUrl %>"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        GitHub: <%= resume.githubLabel || resume.githubUrl %>
+                    </a>
+                <% } %>
+            </div>
+        </header>
+
+        <hr>
+
+        <section>
+            <h2>PROFESSIONAL SUMMARY</h2>
+            <p><%= resume.professionalSummary || '' %></p>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>EDUCATION</h2>
+
+            <% (resume.education || []).forEach(function(item) { %>
+                <div class="education">
+                    <div class="edu-left">
+                        <h3><%= item.institution %></h3>
+
+                        <% if (item.qualification) { %>
+                            <p><em><%= item.qualification %></em></p>
+                        <% } %>
+
+                        <% if (item.details) { %>
+                            <p><%= item.details %></p>
+                        <% } %>
+                    </div>
+
+                    <div class="edu-right">
+                        <% if (item.period) { %>
+                            <p><%= item.period %></p>
+                        <% } %>
+
+                        <% if (item.location) { %>
+                            <p><%= item.location %></p>
+                        <% } %>
+                    </div>
+                </div>
+            <% }); %>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>TECHNICAL SKILLS</h2>
+
+            <div class="skills">
+                <% (resume.skillGroups || []).forEach(function(group) { %>
+                    <div>
+                        <h3><%= group.groupName %></h3>
+                        <p>
+                            <% (group.items || []).forEach(function(skill, index) { %>
+                                <%= skill %><% if (index < group.items.length - 1) { %><br><% } %>
+                            <% }); %>
+                        </p>
+                    </div>
+                <% }); %>
+            </div>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>LEADERSHIP &amp; EXTRACURRICULAR EXPERIENCE</h2>
+
+            <h3>Leadership &amp; Extracurricular Activities</h3>
+
+            <ul>
+                <% (resume.activities || []).forEach(function(activity) { %>
+                    <li><%= activity.description %></li>
+                <% }); %>
+            </ul>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>PROJECTS</h2>
+
+            <% (resume.projects || []).forEach(function(project) { %>
+                <h3><%= project.title %></h3>
+
+                <% if (project.technologies) { %>
+                    <p>
+                        <strong>Technologies:</strong>
+                        <%= project.technologies %>
+                    </p>
+                <% } %>
+
+                <% if (project.points && project.points.length) { %>
+                    <ul>
+                        <% project.points.forEach(function(point) { %>
+                            <li><%= point.description %></li>
+                        <% }); %>
+                    </ul>
+                <% } %>
+            <% }); %>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>CERTIFICATIONS &amp; PROFESSIONAL DEVELOPMENT</h2>
+
+            <ul>
+                <% (resume.certifications || []).forEach(function(item) { %>
+                    <li><%= item.description %></li>
+                <% }); %>
+            </ul>
+        </section>
+
+    </div>
+</body>
+</html>
